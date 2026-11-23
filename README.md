@@ -24,7 +24,9 @@ Aerodynamic downforce scales with the square of velocity ($F_d \propto v^2$). Wh
 ### 2. Mechanical Roll Stiffness & Weight Distribution
 Baseline anti-roll bars and spring rates are scaled proportionally to front/rear mass distribution:
 
-$$\text{Setting} = (\text{Max} - \text{Min}) \times W_{\%} + \text{Min}$$
+$$
+\text{Setting} = (\text{Max} - \text{Min}) \times W_{\%} + \text{Min}
+$$
 
 * **Agility Bias:** Slightly stiffening the rear ARB relative to the front promotes rotational yaw response during corner entry.
 * **Aero Load Compensation:** Increasing downforce adds vertical load onto the suspension at high speed. Spring rates are scaled upward alongside total downforce targets to prevent normalized suspension travel from reaching `1.0` (bottoming out) in high-speed compression zones.
