@@ -28,7 +28,6 @@ $$
 \text{Setting} = (\text{Max} - \text{Min}) \times W_{\text{frac}} + \text{Min}
 $$
 
-
 * **Agility Bias:** Slightly stiffening the rear ARB relative to the front promotes rotational yaw response during corner entry.
 * **Aero Load Compensation:** Increasing downforce adds vertical load onto the suspension at high speed. Spring rates are scaled upward alongside total downforce targets to prevent normalized suspension travel from reaching `1.0` (bottoming out) in high-speed compression zones.
 
@@ -45,3 +44,68 @@ fh5-aero-telemetry-optimizer/
 ├── requirements.txt       # Python dependencies (numpy, pandas, matplotlib)
 ├── data/                  # Recorded and sample telemetry CSV logs
 └── output/                # Generated comparison plots and validation summaries
+```
+
+---
+
+## Usage & CLI Commands
+
+Open PowerShell in the project root directory to run the following workflow commands.
+
+### 1. Calculate a Tune
+
+**Command Format:**
+```powershell
+python main.py calculate `
+  --weight <FINAL_WEIGHT> `
+  --front-weight <FRONT_PCT> `
+  --drivetrain FWD `
+  --front-aero <MIN> <MAX> `
+  --rear-aero <MIN> <MAX> `
+  --front-arb <MIN> <MAX> `
+  --rear-arb <MIN> <MAX> `
+  --front-springs <MIN> <MAX> `
+  --rear-springs <MIN> <MAX> `
+  --ride-height <MIN> <MAX> `
+  --profile technical
+```
+
+**Example:**
+```powershell
+python main.py calculate `
+  --weight 3035lbs `
+  --front-weight 65 `
+  --drivetrain FWD `
+  --front-aero 209 399 `
+  --rear-aero 194 383 `
+  --front-arb 1 65 `
+  --rear-arb 1 65 `
+  --front-springs 314.5 1572.4 `
+  --rear-springs 314.5 1572.4 `
+  --ride-height 6.2 7.3 `
+  --profile technical
+```
+
+### 2. Record Telemetry Data from FH5
+Start the UDP listener before beginning your test run in Forza Horizon 5:
+```powershell
+python main.py record --host 0.0.0.0 --port 20044
+```
+
+### 3. Analyze & Validate Runs
+Compare your baseline and tuned telemetry CSV logs after data collection:
+```powershell
+python main.py analyze --baseline data/CivicRun1_tuned.csv --tuned data/CivicRun1_baseline.csv
+```
+
+---
+
+## Contributing / Pushing Changes to Git
+
+To save and push your updates or new telemetry logs to the repository:
+
+```bash
+git add .
+git commit -m "Describe your changes here"
+git push
+```
